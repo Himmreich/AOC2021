@@ -10,7 +10,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Part1 {
+public class Part2 {
     @AllArgsConstructor
     @Getter
     @Setter
@@ -36,7 +36,7 @@ public class Part1 {
                 Coord coordLast = new Coord(Integer.valueOf(val.split(" -> ")[1].split(",")[0]),
                         Integer.valueOf(val.split(" -> ")[1].split(",")[1]));
 
-                if (coordFirst.getX() == coordLast.getX()) {
+                if (coordFirst.getX() == coordLast.getX()) { //Horizontal
                     if (coordFirst.getY() < coordLast.getY()) {
                         for (int i = coordFirst.getY(); i <= coordLast.getY(); i++) {
                             listCoords.add(new Coord(coordFirst.getX(), i));
@@ -46,9 +46,7 @@ public class Part1 {
                             listCoords.add(new Coord(coordLast.getX(), i));
                         }
                     }
-                }
-
-                if (coordFirst.getY() == coordLast.getY()) {
+                } else if (coordFirst.getY() == coordLast.getY()) { //Vertical
                     if (coordFirst.getX() < coordLast.getX()) {
                         for (int i = coordFirst.getX(); i <= coordLast.getX(); i++) {
                             listCoords.add(new Coord(i, coordFirst.getY()));
@@ -56,6 +54,44 @@ public class Part1 {
                     } else if (coordFirst.getX() > coordLast.getX()) {
                         for (int i = coordFirst.getX(); i >= coordLast.getX(); i--) {
                             listCoords.add(new Coord(i, coordLast.getY()));
+                        }
+                    }
+                } else {
+                    if (coordFirst.getX() > coordLast.getX()) { //x-1
+                        if (coordFirst.getY() > coordLast.getY()) { //y-1
+                           int x = coordFirst.getX();
+                           int y = coordFirst.getY();
+                           while (x >= coordLast.getX() && y >= coordLast.getY()) {
+                               listCoords.add(new Coord(x, y));
+                               x--;
+                               y--;
+                           }
+                        } else if (coordFirst.getY() < coordLast.getY()) { //y+1
+                            int x = coordFirst.getX();
+                            int y = coordFirst.getY();
+                            while (x >= coordLast.getX() && y <= coordLast.getY()) {
+                                listCoords.add(new Coord(x, y));
+                                x--;
+                                y++;
+                            }
+                        }
+                    } else if (coordFirst.getX() < coordLast.getX()) { //x+1
+                        if (coordFirst.getY() > coordLast.getY()) { //y-1
+                            int x = coordFirst.getX();
+                            int y = coordFirst.getY();
+                            while (x <= coordLast.getX() && y >= coordLast.getY()) {
+                                listCoords.add(new Coord(x, y));
+                                x++;
+                                y--;
+                            }
+                        } else if (coordFirst.getY() < coordLast.getY()) { //y+1
+                            int x = coordFirst.getX();
+                            int y = coordFirst.getY();
+                            while (x <= coordLast.getX() && y <= coordLast.getY()) {
+                                listCoords.add(new Coord(x, y));
+                                x++;
+                                y++;
+                            }
                         }
                     }
                 }
@@ -79,7 +115,7 @@ public class Part1 {
                 }
             }
 
-            System.out.println("The first response is : " + counter);
+            System.out.println("The second response is : " + counter);
 
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
